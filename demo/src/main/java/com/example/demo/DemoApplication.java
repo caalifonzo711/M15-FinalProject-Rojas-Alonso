@@ -7,14 +7,20 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 import java.util.Scanner;
 
+//add while loop at start
+//while (user input != end){
 
 public class DemoApplication{
 	public static void main(String[]args){
 		WebClient client;
 		System.out.println("please type in one of the following choices exactly as shown below and press ENTER: ");
-		System.out.println("currency, currentWeather, currentIssLocation");
+		System.out.println("currency, currentWeather, currentIssLocation, exit");
 		Scanner scan = new Scanner(System.in);
 		String s = scan.next();
+
+		//while s is not equal to currency
+		while (!s.equals("exit")) {
+
 		if (s.equals("currency")) {
 
 			System.out.println("Please input a crypto below (example: ETH, BTC, DOGE)");
@@ -26,7 +32,7 @@ public class DemoApplication{
 						.get()
 						.retrieve()
 						.bodyToMono(CoinResponse.class);
-				System.out.println("testing");
+				//System.out.println("testing");
 				CoinResponse coinresponse = responseJson.share().block();
 				System.out.println(coinresponse.asset_id_base);
 				double dollars = Double.parseDouble(coinresponse.rate);
@@ -45,7 +51,7 @@ public class DemoApplication{
 						.get()
 						.retrieve()
 						.bodyToMono(WeatherResponse.class);
-				System.out.println("testing");
+				//System.out.println("testing");
 				WeatherResponse weatherresponse = responseJson.share().block();
 				System.out.println(weatherresponse.coord);
 				System.out.println(weatherresponse.weather);
@@ -64,7 +70,7 @@ public class DemoApplication{
 						.get()
 						.retrieve()
 						.bodyToMono(IssResponse.class);
-				System.out.println("testingyeaaah");
+				//System.out.println("testingyeaaah");
 				IssResponse issresponse = responseJson.share().block();
 				System.out.println(issresponse.iss_position);
 				//use iss_position to call weather API
@@ -85,22 +91,19 @@ public class DemoApplication{
 
 			}
 			catch(Exception e){
-				System.out.println("An error occurred: yeaa YAAAAH" + e.getMessage());
+				System.out.println("An error occurred:" + e.getMessage());
 
 
 		}}
 else {
-		System.out.println("invalid");
-		return;
-
+		System.out.println("invalid command");
 
 	}
+			System.out.println("\n\nplease enter another command below. i.e. currency, currentWeather, currentIssLocation, exit: ");
+			s = scan.next();}
+
+		//
 }}
-//add while loop at start
-//while (user input != end){
-//let user pick lat & long too
-	//make sure lat & long are valid
-	//make sure user picks a valid coin
-	//you can add a while loop until user input returns a valid website
-//the code you have}
+
 //delete scanner obj from memory
+// get rid of extra printing with xml tip from class
